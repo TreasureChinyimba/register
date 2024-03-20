@@ -14,7 +14,7 @@ if ($conn->connect_error) {
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Collect form data
-    $fullName = $_POST["fullName"];
+    $name = $_POST["name"];
     $email = $_POST["email"];
     $message = $_POST["message"];
     
