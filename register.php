@@ -1,4 +1,17 @@
 <?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$database = "register";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $database);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Collect form data
     $fullName = $_POST["fullName"];
@@ -14,12 +27,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $videoTemp = $_FILES["video"]["tmp_name"];
     move_uploaded_file($videoTemp, "uploads/$videoName");
     
-    // Save data to a file or database
-    $userData = "$fullName|$email|$message|$avatarName|$videoName\n";
-    file_put_contents("registered_users.txt", $userData, FILE_APPEND);
+    // Insert data into the database
+    $sql = "INSERT INTO users (fullName, email, message, avatar, video)
+            VALUES ('$fullName', '$email', '$message', '$avatarName', '$videoName')";
+    
+    if ($conn->query($sql) === TRUE) {
+        echo "New record created successfully";
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
     
     // Redirect back to the form page
     header("Location: index.html");
     exit();
 }
+
+$conn->close();
 ?>
