@@ -14,22 +14,14 @@ if ($conn->connect_error) {
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Collect form data
-    $name = $_POST["name"];
+    $fullName = $_POST["name"];
     $email = $_POST["email"];
-    $message = $_POST["message"];
+    $massage = $_POST["massage"];
     
-    // Handle file uploads
-    $avatarName = $_FILES["avatar"]["name"];
-    $avatarTemp = $_FILES["avatar"]["tmp_name"];
-    move_uploaded_file($avatarTemp, "uploads/$avatarName");
-    
-    $videoName = $_FILES["video"]["name"];
-    $videoTemp = $_FILES["video"]["tmp_name"];
-    move_uploaded_file($videoTemp, "uploads/$videoName");
     
     // Insert data into the database
-    $sql = "INSERT INTO users (fullName, email, message, avatar, video)
-            VALUES ('$fullName', '$email', '$message', '$avatarName', '$videoName')";
+    $sql = "INSERT INTO users (name, email, massage)
+            VALUES ('$fullName', '$email', '$massage')";
     
     if ($conn->query($sql) === TRUE) {
         echo "New record created successfully";
@@ -41,6 +33,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     header("Location: index.html");
     exit();
 }
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 $conn->close();
 ?>
