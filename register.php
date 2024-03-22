@@ -16,12 +16,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Collect form data
     $fullName = $_POST["name"];
     $email = $_POST["email"];
-    $massage = $_POST["massage"];
+    $age = $_POST["age"];
     
     
     // Insert data into the database
-    $sql = "INSERT INTO users (name, email, massage)
-            VALUES ('$fullName', '$email', '$massage')";
+    $sql = "INSERT INTO users (name, email, age)
+            VALUES ('$fullName', '$email', '$age')";
     
     if ($conn->query($sql) === TRUE) {
         echo "New record created successfully";
